@@ -1,35 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Pipes;
 using UnityEngine;
 
 namespace Utility
 {
     public static class PipeUtilities
     {
-        public static Vector3 GetMiteredPoint(Vector3 start, Vector3 end, float distance)
-        {
-            return start + Vector3.ClampMagnitude(end - start, distance);
-        }
-
-        public static Vector2[] GetRegularPolygon(int sides, float radius, float angleOffset = 0)
-        {
-            var points = new Vector2[sides];
-            for (int i = 0; i < sides; i++)
-            {
-                points[i] = Quaternion.AngleAxis(((i / (float)sides) * 360f) + angleOffset, Vector3.forward) *
-                            (Vector2.right * radius);
-            }
-
-            return points;
-        }
-
-        public static Vector3[] GetPipeCrossSection(Vector3 position, Quaternion direction, int sides, float radius)
-        {
-            var basePoints = GetRegularPolygon(sides, radius, (0.5f / sides) * 360);
-            var outPoints = basePoints.Select(point => (direction * point) + position).ToArray();
-            return outPoints;
-        }
-
         public static List<Vector3Int> SimplifyPath(Vector3Int[] path)
         {
             var outPath = new List<Vector3Int>();
